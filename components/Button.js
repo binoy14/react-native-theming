@@ -1,44 +1,57 @@
 import React, { Component } from "react";
-import { string, number, oneOfType } from "prop-types";
+import { string, number, oneOfType, object } from "prop-types";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
-const defaultTheme = {
-	theme: {
-		primary: 'teal',
-		text: '#777',
-	}
-};
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    borderRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 3,
+    shadowOpacity: 2,
+  },
+});
 
 export default class Button extends Component {
-	static propTypes = {
-		title: oneOfType([string, number])
-	};
+  static propTypes = {
+    title: oneOfType([string, number])
+  };
 
-	static defaultProps = defaultTheme;
+  constructor(props, context) {
+    super(props, context);
+  }
 
-	constructor(props) {
-		super(props);
+  static contextTypes = {
+    theme: object
+  }
 
-		this.props.theme = Object.assign({}, defaultTheme.theme, this.props.theme);
-	}
-	
-	styles = StyleSheet.create({
-		container: {
-			backgroundColor: this.props.theme.primary,
-			padding: 20,
-			borderRadius: 10,
-		},
-		text: {
-			color: this.props.theme.text,
-		},
-	});
+  flattenStyles(...styles) {
+    return StyleSheet.flatten([...styles]);
+  }
 
-	render() {
-		console.log(this.props.theme);
-		return (
-			<TouchableOpacity style={[this.styles.container, this.props.containerStyle && this.props.containerStyle]}>
-				<Text style={this.styles.text}>{this.props.title}</Text>
-			</TouchableOpacity>
-		);
-	}
+  render() {
+    return (
+      <TouchableOpacity
+        style={
+          this.flattenStyles(styles.container, {
+            backgroundColor: this.context.theme.primaryColor,
+            shadowColor: this.context.theme.dividerColor,
+          }, this.props.containerStyle && this.props.containerStyle)
+        }
+      >
+        <Text
+          style={
+            this.flattenStyles({
+              color: this.context.theme.primaryTextColor
+            }, this.props.containerStyle && this.props.containerStyle)
+          }
+        >
+          {this.props.title}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
 }

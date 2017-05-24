@@ -1,11 +1,48 @@
 import React, { Component } from "react";
+import { View } from "react-native";
+
+const defaultTheme = {
+  primaryColorDark: '#1976D2',
+  primaryColor: '#2196F3',
+  primaryColorLight: '#BBDEFB',
+  primaryColorText: '#FFFFFF',
+  accentColor: '#FF5252',
+  primaryTextColor: '#212121',
+  secondaryTextColor: '#757575',
+  dividerColor: '#BDBDBD',
+};
 
 export default class ThemeProvider extends Component {
-	render() {
-		const { theme, children } = this.props;
-		const Component = React.cloneElement(children, { theme });
-		return (
-			Component
-		);
-	}
+  getChildContext() {
+    if (this.props.hasOwnProperty('theme')) {
+      console.log('here', this.props.theme)
+      return {
+        theme: this.props.theme
+      };
+    } else {
+      return {
+        theme: defaultTheme
+      };
+    }
+  }
+
+  static childContextTypes = {
+    theme: React.PropTypes.object
+  }
+
+  render() {
+    const { children } = this.props;
+    const count = React.Children.count(children);
+    if (count === 1) {
+      return React.Children.only(children);
+    } else {
+      return (
+        <View>
+          {children}
+        </View>
+      );
+    }
+
+    return null;
+  }
 }
