@@ -15,12 +15,13 @@ const defaultTheme = {
 export default class ThemeProvider extends Component {
   getChildContext() {
     if (this.props.hasOwnProperty('theme')) {
+      const newTheme = {...defaultTheme, ...this.props.theme};
       return {
-        theme: this.props.theme
+        theme: newTheme,
       };
     } else {
       return {
-        theme: defaultTheme
+        theme: defaultTheme,
       };
     }
   }

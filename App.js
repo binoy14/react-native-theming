@@ -1,16 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Button, ThemeProvider } from "./components/";
 
 const theme = {
-  primaryColorDark: '#E64A19',
   primaryColor: '#FF5722',
-  primaryColorLight: '#FFCCBC',
-  primaryColorText: '#FFFFFF',
-  accentColor: '#009688',
-  primaryTextColor: '#212121',
-  secondaryTextColor: '#757575',
-  dividerColor: '#BDBDBD',
 };
 
 export default class App extends React.Component {
@@ -30,12 +23,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
