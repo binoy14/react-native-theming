@@ -15,7 +15,6 @@ const defaultTheme = {
 export default class ThemeProvider extends Component {
   getChildContext() {
     if (this.props.hasOwnProperty('theme')) {
-      console.log('here', this.props.theme)
       return {
         theme: this.props.theme
       };
